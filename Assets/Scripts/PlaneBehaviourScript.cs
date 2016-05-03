@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using UnityEngine.UI;
 public class PlaneBehaviourScript : MonoBehaviour {
 
     private Gyroscope gyro;
-
+    public Text text;
     private bool enabledGyro = false;
 
     static float sensitivity = 5.0F;
@@ -27,6 +27,7 @@ public class PlaneBehaviourScript : MonoBehaviour {
     {
         Screen.orientation = ScreenOrientation.Portrait;
         //transform.up = -MovAverage(new Vector3(0, 1, 0));
+        text.text = ("VAL : ");
     }
 
     Vector3 MovAverage(Vector3 sample)
@@ -43,8 +44,11 @@ public class PlaneBehaviourScript : MonoBehaviour {
     {
         //transform.localEulerAngles = Input.gyro.attitude.eulerAngles;
         Vector3 vec = -MovAverage(Input.acceleration.normalized);
-        
-        transform.forward = vec;//-MovAverage(Input.acceleration.normalized);
+        Vector3 temp = transform.forward;
+        text.text = ("INPUT :x = " + Input.acceleration.normalized.x + " y= " + Input.acceleration.normalized.y + "  z=" + Input.acceleration.normalized.z + "\n\n\n" +  "VEC:  x=" + vec.x + " y=" + vec.y + " z=" + vec.z);
+        Vector3 temp2 = transform.right;
+        transform.forward = -MovAverage(Input.acceleration.normalized);
+        //transform.right = new Vector3(vec.x, temp2.y, temp2.z); 
     }
 
 

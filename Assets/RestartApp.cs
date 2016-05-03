@@ -15,4 +15,9 @@ public class RestartApp : MonoBehaviour {
         sphere.transform.position = new Vector3(Random.Range(-4.0F, 4.0F), 4, Random.Range(-4.0F, 4.0F));
     }
 
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
 }
