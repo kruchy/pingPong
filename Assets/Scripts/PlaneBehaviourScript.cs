@@ -12,7 +12,7 @@ public class PlaneBehaviourScript : MonoBehaviour {
 
     private float x;
     private float y;
-    public float speed = 1.5F;
+    public float speed = 100.0F;
     private int sizeFilter = 15;
      private Vector3[] filter;
      private Vector3 filterSum =Vector3.zero ;
@@ -51,27 +51,44 @@ public class PlaneBehaviourScript : MonoBehaviour {
         return filterSum / qSamples;
     }
 
+    public Vector3 dist = new Vector3(1, 1, 0);
+    public float rotSpeed = 1000.0f;
+    public float tilt = 1.0f;
+    public float smooth = 2.0f;
+
+    // Update is called once per frame
     void Update()
     {
-        //transform.localEulerAngles = Input.gyro.attitude.eulerAngles;
-        Vector3 vec = -MovAverage(Input.acceleration.normalized);
-        Quaternion temp = transform.rotation;
-        text.text = ("System = " + SystemInfo.supportsGyroscope + " isEnabled=" +Input.gyro.enabled + "\n\n\n INPUT :x = " + Input.gyro.attitude.x + " y= " + Input.gyro.attitude.y + "  z=" + Input.gyro.attitude.z + " w= " + Input.gyro.attitude.w +"\n\n\n");// +  "VEC:  x=" + vec.x + " y=" + vec.y + " z=" + vec.z);
-        Vector3 temp2 = transform.right;
-        //float clamp = vec.z - vec.x < 0.0F ? 0.0F : vec.z - vec.x > 1.0F ? 1.0F : -(vec.z - vec.x);
-        //transform.Rotate(Vector3.right, -vec.y * speed);
-        //transform.Rotate(Vector3.forward, vec.x * speed  );
-        //transform.rotation = new Quaternion(transform.rotation.x, vec.y, vec.z, transform.rotation.w);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, , Time.deltaTime * speed);
-        //transform.forward = -MovAverage(Input.acceleration.normalized);
-        //transform.right = new Vector3(vec.x, temp2.y, temp2.z); 
-        Vector3 destination = Vector3.zero;
-        destination.x = Input.acceleration.normalized.y;
-        destination.z = -Input.acceleration.normalized.x;
-        transform.rotation = Quaternion.Euler(destination);
-        transform.Rotate(destination * Time.deltaTime * 100.0F,Space.World);
-            
+        dist = Input.acceleration.normalized;
+        float z = -dist.x * tilt;
+        float x = dist.y * tilt;
+        Quaternion t = Quaternion.Euler(x, z, 0f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, t, Time.deltaTime * smooth);
     }
+
+
+
+    //void Update()
+    //{
+    //transform.localEulerAngles = Input.gyro.attitude.eulerAngles;
+    //Vector3 vec = -MovAverage(Input.acceleration.normalized);
+    //Quaternion temp = transform.rotation;
+    //text.text = ("System = " + SystemInfo.supportsGyroscope + " isEnabled=" +Input.gyro.enabled + "\n\n\n INPUT :x = " + Input.gyro.attitude.x + " y= " + Input.gyro.attitude.y + "  z=" + Input.gyro.attitude.z + " w= " + Input.gyro.attitude.w +"\n\n\n");// +  "VEC:  x=" + vec.x + " y=" + vec.y + " z=" + vec.z);
+    //Vector3 temp2 = transform.right;
+    //float clamp = vec.z - vec.x < 0.0F ? 0.0F : vec.z - vec.x > 1.0F ? 1.0F : -(vec.z - vec.x);
+    //transform.Rotate(Vector3.right, -vec.y * speed);
+    //transform.Rotate(Vector3.forward, vec.x * speed  );
+    //transform.rotation = new Quaternion(transform.rotation.x, vec.y, vec.z, transform.rotation.w);
+    //transform.rotation = Quaternion.Slerp(transform.rotation, , Time.deltaTime * speed);
+    //transform.forward = -MovAverage(new Vector3(Input.acceleration.normalized.y,Input.acceleration.normalized.y,-Input.acceleration.normalized.x));
+    //transform.right = new Vector3(vec.x, temp2.y, temp2.z); 
+    //Vector3 destination = Vector3.zero;
+    //destination.x = Input.acceleration.normalized.y;
+    //destination.z = -Input.acceleration.normalized.x;
+    ////transform.rotation = Quaternion.Euler(destination * Time.deltaTime * speed);
+    //transform.Rotate(destination * Time.deltaTime * speed, Space.World);
+
+    //}
 
 
     //   float rotx = 0;
