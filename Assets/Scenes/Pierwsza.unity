@@ -270,7 +270,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 274712234}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: 0, y: -3.68, z: 0}
   m_LocalScale: {x: 9.080529, y: 0.089096054, z: 7.238605}
   m_Children: []
@@ -290,6 +290,10 @@ MonoBehaviour:
   text: {fileID: 1950961425}
   drop: {fileID: 606166682}
   speed: 10
+  dist: {x: 1, y: 1, z: 0}
+  rotSpeed: 1000
+  tilt: 1
+  smooth: 2
 --- !u!54 &274712240
 Rigidbody:
   m_ObjectHideFlags: 0
